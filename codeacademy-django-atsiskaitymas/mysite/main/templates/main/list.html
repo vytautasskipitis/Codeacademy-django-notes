@@ -1,0 +1,48 @@
+{% extends "main/base_login.html" %}
+{% block title %}View List{% endblock %}
+
+{% block content %}
+    <h1>{{ls.name}}</h1>
+<!--    <h3>{{ls.id}}</h3>-->
+    <form method="post" action="#" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for item in ls.item_set.all %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    {% if item.complete == True %}
+                        <input type="checkbox", value="clicked", name="c{{item.id}}" checked>
+                    {% else %}
+                        <input type="checkbox", value="clicked", name="c{{item.id}}">
+                    {% endif %}
+                </div>
+            </div>
+            <input type="text", value="{{item.text}}" class="form-control">
+        </div>
+        {% endfor %}
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button type="submit", name="newItem", value="newItem", class="btn btn-success">Add Text</button>
+            </div>
+            <input type="text", name="new">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button type="submit", name="newPicture", value="newPicture", class="btn btn-success">Add Picture</button>
+            </div>
+            <input type="file", name="newPicture">
+        </div>
+
+        <button type="submit", name="save", value="save", class="btn btn-success">Save</button>
+
+        <a href="/delete/{{ls.id}}", class="btn btn-success">Delete the entire list</a>
+        <a href="/edit/{{ls.id}}", class="btn btn-success">Edit</a>
+
+    </form>
+{% endblock %}
+
+
+
+
